@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Automóvil</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #formulario {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #titulo {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .imagen-izquierda {
+            display: flex;
+            align-items: center;
+        }
+
+        .imagen-izquierda img {
+            max-width: 150px;
+            margin-right: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .columnas {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .columna {
+            width: 48%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input {
+            width: calc(100% - 16px);
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #datos-guardados {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #datos-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        #datos-table th, #datos-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .editar, .eliminar {
+            cursor: pointer;
+            color: #1e90ff;
+            text-decoration: underline;
+            margin-right: 10px;
+        }
+
+        #mensaje-vacio {
+            text-align: center;
+            color: #888;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="formulario">
+        <h2 id="titulo">Automóvil</h2>
+        <div class="imagen-izquierda">
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/019/617/103/small/car-isometric-symbol-color-png.png" alt="Imagen del automóvil">
+            <form id="form-automovil" class="columnas">
+                <div class="columna">
+                    <label for="id">ID:</label>
+                    <input type="text" id="id" name="id" required>
+
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" name="color" required>
+
+                    <label for="marca">Marca:</label>
+                    <input type="text" id="marca" name="marca" required>
+
+                    <label for="puertas">Número de puertas:</label>
+                    <input type="text" id="puertas" name="puertas" required>
+
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" name="modelo" required>
+                </div>
+                <div class="columna">
+                    <label for="capacidad">Capacidad de pasajeros:</label>
+                    <input type="text" id="capacidad" name="capacidad" required>
+
+                    <label for="fabricacion">Año de fabricación:</label>
+                    <input type="text" id="fabricacion" name="fabricacion" required>
+
+                    <label for="precio">Precio:</label>
+                    <input type="text" id="precio" name="precio" required>
+
+                    <label for="combustible">Tipo de combustible:</label>
+                    <input type="text" id="combustible" name="combustible" required>
+
+                    <label for="serie">Número de serie:</label>
+                    <input type="text" id="serie" name="serie" required>
+                </div>
+                <button type="button" id="guardar-actualizar" onclick="guardarDatos()">Guardar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="datos-guardados">
+        <h2>Datos Guardados</h2>
+        <table id="datos-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Color</th>
+                    <th>Marca</th>
+                    <th>Número de puertas</th>
+                    <th>Modelo</th>
+                    <th>Capacidad de pasajeros</th>
+                    <th>Año de fabricación</th>
+                    <th>Precio</th>
+                    <th>Tipo de combustible</th>
+                    <th>Número de serie</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="datos-body"></tbody>
+        </table>
+        <div id="mensaje-vacio"></div>
+    </div>
+
+    <script>
+        function guardarDatos() {
+            var id = document.getElementById('id').value.trim();
+            var color = document.getElementById('color').value.trim();
+            var marca = document.getElementById('marca').value.trim();
+            var puertas = document.getElementById('puertas').value.trim();
+            var modelo = document.getElementById('modelo').value.trim();
+            var capacidad = document.getElementById('capacidad').value.trim();
+            var fabricacion = document.getElementById('fabricacion').value.trim();
+            var precio = document.getElementById('precio').value.trim();
+            var combustible = document.getElementById('combustible').value.trim();
+            var serie = document.getElementById('serie').value.trim();
+
+            if (id === "" || color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fabricacion === "" || precio === "" || combustible === "" || serie === "") {
+                alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
+                return;
+            }
+
+            var formData = {
+                id: id,
+                color: color,
+                marca: marca,
+                puertas: puertas,
+                modelo: modelo,
+                capacidad: capacidad,
+                fabricacion: fabricacion,
+                precio: precio,
+                combustible: combustible,
+                serie: serie
+            };
+
+            var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
+            storedData.push(formData);
+            localStorage.setItem('automoviles', JSON.stringify(storedData));
+
+            actualizarTabla();
+            limpiarCampos();
+        }
+
+        function limpiarCampos() {
+            document.getElementById('id').value = '';
+            document.getElementById('color').value = '';
+            document.getElementById('marca').value = '';
+            document.getElementById('puertas').value = '';
+            document.getElementById('modelo').value = '';
+            document.getElementById('capacidad').value = '';
+            document.getElementById('fabricacion').value = '';
+            document.getElementById('precio').value = '';
+            document.getElementById('combustible').value = '';
+            document.getElementById('serie').value = '';
+
+            // Cambiar el botón a "Guardar" después de limpiar los campos
+            document.getElementById('guardar-actualizar').textContent = 'Guardar';
+            document.getElementById('guardar-actualizar').onclick = function() {
+                guardarDatos();
+            };
+        }
+
+        function actualizarTabla() {
+            var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
+            var datosBody = document.getElementById('datos-body');
+            var mensajeVacio = document.getElementById('mensaje-vacio');
+
+            datosBody.innerHTML = '';
+            mensajeVacio.textContent = '';
+
+            if (storedData.length === 0) {
+                mensajeVacio.textContent = 'No existen registros. ¡Prueba agregando uno nuevo!';
+            } else {
+                storedData.forEach(function(data) {
+                    var row = datosBody.insertRow();
+
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var cell = row.insertCell();
+                            cell.textContent = data[key];
+                        }
+                    }
+
+                    var accionesCell = row.insertCell();
+                    accionesCell.appendChild(renderizarAcciones(data));
+                });
+            }
+        }
+
+        function renderizarAcciones(data) {
+            var editar = document.createElement('span');
+            editar.className = 'editar';
+            editar.textContent = 'Editar';
+            editar.onclick = function() {
+                editarDatos(data);
+            };
+
+            var eliminar = document.createElement('span');
+            eliminar.className = 'eliminar';
+            eliminar.textContent = 'Eliminar';
+            eliminar.onclick = function() {
+                eliminarDatos(data);
+            };
+
+            var acciones = document.createElement('div');
+            acciones.appendChild(editar);
+            acciones.appendChild(eliminar);
+
+            return acciones;
+        }
+
+        function editarDatos(data) {
+            document.getElementById('id').value = data.id;
+            document.getElementById('color').value = data.color;
+            document.getElementById('marca').value = data.marca;
+            document.getElementById('puertas').value = data.puertas;
+            document.getElementById('modelo').value = data.modelo;
+            document.getElementById('capacidad').value = data.capacidad;
+            document.getElementById('fabricacion').value = data.fabricacion;
+            document.getElementById('precio').value = data.precio;
+            document.getElementById('combustible').value = data.combustible;
+            document.getElementById('serie').value = data.serie;
+
+            // Cambiar el botón a "Actualizar" después de cargar los datos
+            document.getElementById('guardar-actualizar').textContent = 'Actualizar';
+            document.getElementById('guardar-actualizar').onclick = function() {
+                actualizarDatos(data.id);
+            };
+        }
+
+        function eliminarDatos(data) {
+            var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
+
+            storedData = storedData.filter(function(item) {
+                return item.id !== data.id;
+            });
+
+            localStorage.setItem('automoviles', JSON.stringify(storedData));
+            actualizarTabla();
+        }
+
+        function actualizarDatos(id) {
+            // Lógica para actualizar los datos en lugar de agregar nuevos
+            guardarDatos();
+        }
+
+        window.onload = function() {
+            actualizarTabla();
+        };
+    </script>
+</body>
+</html>
