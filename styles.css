@@ -1,0 +1,150 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+#formulario {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+#titulo {
+    text-align: center;
+    font-size: 42px; /* Aumenta el tamaño de la fuente */
+    margin-bottom: 40px;
+    color: #007BFF; /* Cambia el color del texto a un tono de azul */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia el tipo de fuente */
+    font-weight: bold; /* Hace el texto más grueso */
+    text-transform: uppercase; /* Convierte el texto a mayúsculas */
+    letter-spacing: 2px; /* Añade espaciado entre letras */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Agrega sombra al texto */
+    transition: color 0.3s ease; /* Agrega transición de color al título */
+}
+
+#titulo:hover {
+    color: #0056b3; /* Cambia el color al pasar el mouse */
+}
+
+.contenedor-tres-columnas {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinea verticalmente */
+    flex-wrap: wrap;
+}
+
+.columna {
+    width: calc(30% - 10px); /* Ajuste del ancho y márgenes */
+    box-sizing: border-box; /* Evitar problemas con el ancho total */
+    margin-bottom: 20px; /* Espacio entre las columnas */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 18px;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: #333;
+}
+
+/* Estilos para el efecto hover */
+input:hover,
+select:hover {
+    border-color: #aaa;
+}
+
+/* Estilos para el efecto focus */
+input:focus,
+select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 15px rgba(170, 170, 170, 0.2);
+}
+
+button {
+    width: 20%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    /* Efecto de sombra y resaltado al pasar el mouse */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #45a049; /* Cambia el color al pasar el mouse */
+    transform: translateY(-2px); /* Añade un pequeño desplazamiento hacia arriba */
+}
+
+/* Estilo centrado */
+.center-button {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Efecto de transición en el texto al hacer clic */
+button:active {
+    transform: translateY(2px); /* Añade un pequeño desplazamiento hacia abajo al hacer clic */
+}
+
+#datos-guardados {
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#datos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+#datos-table th,
+#datos-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.editar,
+.eliminar {
+    cursor: pointer;
+    color: #1e90ff;
+    text-decoration: underline;
+    margin-right: 10px;
+}
+
+#mensaje-vacio {
+    text-align: center;
+    color: #888;
+    margin-top: 10px;
+}
+
+.imagen-preview img {
+    max-width: 100%;
+    height: auto;
+}
