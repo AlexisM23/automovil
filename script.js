@@ -215,6 +215,69 @@ function mostrarImagen() {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    // Obtener referencias a los elementos del formulario
+    const capacidadInput = document.getElementById('capacidad');
+    const capacidadError = document.getElementById('capacidad-error');
+    const precioInput = document.getElementById('precio');
+    const precioError = document.getElementById('precio-error');
+    const chasisInput = document.getElementById('chasis');
+    const chasisError = document.getElementById('chasis-error');
+    const velocidadMaximaInput = document.getElementById('velocidadMaxima');
+    const velocidadMaximaError = document.getElementById('velocidadMaxima-error');
+
+    // Agregar eventos de escucha para las validaciones
+    capacidadInput.addEventListener('input', validarCapacidad);
+    precioInput.addEventListener('input', validarPrecio);
+    chasisInput.addEventListener('input', validarChasis);
+    velocidadMaximaInput.addEventListener('input', validarVelocidadMaxima);
+
+    // Función para validar la capacidad
+    function validarCapacidad() {
+        const capacidadValor = capacidadInput.value;
+        // Verificar si la capacidad es un número
+        if (isNaN(capacidadValor)) {
+            capacidadError.textContent = 'Este campo requiere valores numéricos';
+            capacidadError.classList.add('error-visible');
+        } else {
+            capacidadError.textContent = '';
+            capacidadError.classList.remove('error-visible');
+        }
+    }
+    function validarPrecio() {
+        const precioValor = precioInput.value;
+        // Verificar si el precio es un número
+        if (isNaN(precioValor)) {
+            precioError.textContent = 'Este campo requiere valores numéricos';
+            precioError.classList.add('error-visible');
+        } else {
+            precioError.textContent = '';
+            precioError.classList.remove('error-visible');
+        }
+    }
+    function validarChasis() {
+        const chasisValor = chasisInput.value;
+        // Verificar si el número de chasis tiene más de 17 caracteres
+        if (chasisValor.length > 17) {
+            chasisError.textContent = 'Este campo requiere solo 17 caracteres';
+            chasisError.classList.add('error-visible');
+        } else {
+            chasisError.textContent = '';
+            chasisError.classList.remove('error-visible');
+        }
+    }
+    function validarVelocidadMaxima() {
+        const velocidadMaximaValor = velocidadMaximaInput.value;
+        // Verifica si la velocidad máxima es un número
+        if (isNaN(velocidadMaximaValor)) {
+            velocidadMaximaError.textContent = 'Este campo requiere valores numéricos';
+            velocidadMaximaError.classList.add('error-visible');
+        } else {
+            velocidadMaximaError.textContent = '';
+            velocidadMaximaError.classList.remove('error-visible');
+        }
+    }
+});
 
 window.onload = function () {
     actualizarTabla();
