@@ -9,7 +9,7 @@ function guardarDatos() {
     var fecha = obtenerValor('fecha');
     var precio = obtenerValor('precio');
     var combustible = obtenerValor('combustible');
-    var serie = obtenerValor('chasis');
+    var chasis = obtenerValor('chasis');
     var estado = obtenerValor('estado');
 
     // Validar campos
@@ -28,7 +28,7 @@ function guardarDatos() {
         fecha: fecha,
         precio: precio,
         combustible: combustible,
-        serie: serie,
+        chasis: chasis,
         estado: estado
     };
 
@@ -48,7 +48,7 @@ function obtenerValor(id) {
 }
 
 function validarCampos() {
-    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fecha === "" || precio === "" || combustible === "" || serie === "" || estado === "") {
+    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fecha === "" || precio === "" || combustible === "" || chasis === "" || estado === "") {
         alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
         return false;
     }
@@ -78,7 +78,7 @@ function limpiarCampos() {
     var campos = ['color', 'marca', 'puertas', 'modelo', 'capacidad', 'fabricacion', 'precio', 'combustible', 'chasis', 'velocidadMaxima'];
 
     campos.forEach(function (campo) {
-        document.getElementById(campo).value = '';
+        document.getElementById(campo).value = obtenerValor(campo);
     });
 
     var botonGuardarActualizar = document.getElementById('guardar-actualizar');
@@ -86,20 +86,15 @@ function limpiarCampos() {
     botonGuardarActualizar.onclick = guardarDatos;
 }
 
+function obtenerValorYTrim(id) {
+    return document.getElementById(id).value.trim();
+}
 
 function actualizarDatos(id) {
-    var color = document.getElementById('color').value.trim();
-    var marca = document.getElementById('marca').value.trim();
-    var puertas = document.getElementById('puertas').value.trim();
-    var modelo = document.getElementById('modelo').value.trim();
-    var capacidad = document.getElementById('capacidad').value.trim();
-    var fabricacion = document.getElementById('fabricacion').value.trim();
-    var precio = document.getElementById('precio').value.trim();
-    var combustible = document.getElementById('combustible').value.trim();
-    var serie = document.getElementById('chasis').value.trim();
-    var velocidadMaxima = document.getElementById('velocidadMaxima').value.trim();
+    var campos = ['color', 'marca', 'puertas', 'modelo', 'capacidad', 'fecha', 'precio', 'combustible', 'chasis', 'estado'];
 
-    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fabricacion === "" || precio === "" || combustible === "" || serie === "" || velocidadMaxima === "") {
+    // Validar que todos los campos estén llenos
+    if (campos.some(function(campo) { return obtenerValorYTrim(campo) === ""; })) {
         alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
         return;
     }
@@ -114,16 +109,9 @@ function actualizarDatos(id) {
 
     if (index !== -1) {
         // Actualizar los datos en el array
-        storedData[index].color = color;
-        storedData[index].marca = marca;
-        storedData[index].puertas = puertas;
-        storedData[index].modelo = modelo;
-        storedData[index].capacidad = capacidad;
-        storedData[index].fabricacion = fabricacion;
-        storedData[index].precio = precio;
-        storedData[index].combustible = combustible;
-        storedData[index].serie = serie;
-        storedData[index].velocidadMaxima = velocidadMaxima;
+        campos.forEach(function(campo) {
+            storedData[index][campo] = obtenerValorYTrim(campo);
+        });
 
         // Guardar el array actualizado en el almacenamiento local
         localStorage.setItem('automoviles', JSON.stringify(storedData));
@@ -135,6 +123,7 @@ function actualizarDatos(id) {
         alert("No se pudo encontrar el elemento para actualizar.");
     }
 }
+
 
 function eliminarDatos(data) {
     var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
