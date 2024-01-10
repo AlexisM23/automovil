@@ -128,28 +128,29 @@ function actualizarDatos(id) {
 function eliminarDatos(data) {
     var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
 
-    storedData = storedData.filter(function (item) {
-        return item.id !== data.id;
-    });
+    storedData = storedData.filter(item => item.id !== data.id);
 
     localStorage.setItem('automoviles', JSON.stringify(storedData));
     actualizarTabla();
 }
 
-function renderizarAcciones(data) {
-    var editar = document.createElement('span');
-    editar.className = 'editar';
-    editar.textContent = 'Editar';
-    editar.onclick = function () {
-        editarDatos(data);
-    };
 
-    var eliminar = document.createElement('span');
-    eliminar.className = 'eliminar';
-    eliminar.textContent = 'Eliminar';
-    eliminar.onclick = function () {
+function renderizarAcciones(data) {
+    function crearAccion(texto, onclickFunc) {
+        var accion = document.createElement('span');
+        accion.className = texto.toLowerCase();
+        accion.textContent = texto;
+        accion.onclick = onclickFunc;
+        return accion;
+    }
+
+    var editar = crearAccion('Editar', function () {
+        editarDatos(data);
+    });
+
+    var eliminar = crearAccion('Eliminar', function () {
         eliminarDatos(data);
-    };
+    });
 
     var acciones = document.createElement('div');
     acciones.appendChild(editar);
@@ -159,44 +160,40 @@ function renderizarAcciones(data) {
 }
 
 function editarDatos(data) {
-    document.getElementById('color').value = data.color;
-    document.getElementById('marca').value = data.marca;
-    document.getElementById('puertas').value = data.puertas;
-    document.getElementById('modelo').value = data.modelo;
-    document.getElementById('capacidad').value = data.capacidad;
-    document.getElementById('fabricacion').value = data.fabricacion;
-    document.getElementById('precio').value = data.precio;
-    document.getElementById('combustible').value = data.combustible;
-    document.getElementById('chasis').value = data.serie;
-    document.getElementById('velocidadMaxima').value = data.velocidadMaxima;
+    var campos = ['color', 'marca', 'puertas', 'modelo', 'capacidad', 'fecha', 'precio', 'combustible', 'chasis', 'estado'];
 
-    // Cambiar el botón a "Actualizar" después de cargar los datos
-    document.getElementById('guardar-actualizar').textContent = 'Actualizar';
-    document.getElementById('guardar-actualizar').onclick = function () {
+    campos.forEach(function (campo) {
+        document.getElementById(campo).value = data[campo];
+    });
+
+    var botonGuardarActualizar = document.getElementById('guardar-actualizar');
+    botonGuardarActualizar.textContent = 'Actualizar';
+    botonGuardarActualizar.onclick = function () {
         actualizarDatos(data.id);
     };
 }
+
 
 function actualizarTabla() {
     var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
     var datosBody = document.getElementById('datos-body');
     var mensajeVacio = document.getElementById('mensaje-vacio');
 
-    datosBody.innerHTML = '';
-    mensajeVacio.textContent = '';
+    datosBody.textContent = ''; // Usar textContent para limpiar
 
-    if (storedData.length === 0) {
-        mensajeVacio.textContent = 'No existen registros. ¡Prueba agregando uno nuevo!';
-    } else {
+    mensajeVacio.textContent = storedData.length === 0 ? 'No existen registros. ¡Prueba agregando uno nuevo!' : '';
+
+    if (storedData.length > 0) {
         storedData.forEach(function (data) {
             var row = datosBody.insertRow();
 
-            for (var key in data) {
-                if (data.hasOwnProperty(key)) {
-                    var cell = row.insertCell();
-                    cell.textContent = data[key];
-                }
-            }
+            // Definir explícitamente las propiedades a mostrar en la tabla
+            var propiedadesAMostrar = ['color', 'marca', 'puertas', 'modelo', 'capacidad', 'fecha', 'precio', 'combustible', 'chasis', 'estado'];
+
+            propiedadesAMostrar.forEach(function (propiedad) {
+                var cell = row.insertCell();
+                cell.textContent = data[propiedad];
+            });
 
             var accionesCell = row.insertCell();
             accionesCell.appendChild(renderizarAcciones(data));
@@ -272,17 +269,6 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             chasisError.textContent = '';
             chasisError.classList.remove('error-visible');
-        }
-    }
-    function validarVelocidadMaxima() {
-        const velocidadMaximaValor = velocidadMaximaInput.value;
-        // Verifica si la velocidad máxima es un número
-        if (isNaN(velocidadMaximaValor)) {
-            velocidadMaximaError.textContent = 'Este campo requiere valores numéricos';
-            velocidadMaximaError.classList.add('error-visible');
-        } else {
-            velocidadMaximaError.textContent = '';
-            velocidadMaximaError.classList.remove('error-visible');
         }
     }
 });
