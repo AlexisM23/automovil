@@ -1,32 +1,23 @@
 function guardarDatos() {
-    var id = 'id_' + Date.now(); // Generar un ID único para cada fila
-    var color = document.getElementById('color').value.trim();
-    var marca = document.getElementById('marca').value.trim();
-    var puertas = document.getElementById('puertas').value.trim();
-    var modelo = document.getElementById('modelo').value.trim();
-    var capacidad = document.getElementById('capacidad').value.trim();
-    var fabricacion = document.getElementById('fabricacion').value.trim();
-    var precio = document.getElementById('precio').value.trim();
-    var combustible = document.getElementById('combustible').value.trim();
-    var serie = document.getElementById('chasis').value.trim();
-    var velocidadMaxima = document.getElementById('velocidadMaxima').value.trim();
+    // Obtener valores del formulario
+    var id = 'id_' + Date.now();
+    var color = obtenerValor('color');
+    var marca = obtenerValor('marca');
+    var puertas = obtenerValor('puertas');
+    var modelo = obtenerValor('modelo');
+    var capacidad = obtenerValor('capacidad');
+    var fecha = obtenerValor('fecha');
+    var precio = obtenerValor('precio');
+    var combustible = obtenerValor('combustible');
+    var serie = obtenerValor('chasis');
+    var estado = obtenerValor('estado');
 
-    if (serie.length !== 17) {
-        alert("El número de chasis debe tener exactamente 17 caracteres alfanuméricos.");
+    // Validar campos
+    if (!validarCampos()) {
         return;
     }
 
-    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fabricacion === "" || precio === "" || combustible === "" || serie === "" || velocidadMaxima === "") {
-        alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
-        return;
-    }
-
-    var añoActual = new Date().getFullYear();
-    if (isNaN(fabricacion) || fabricacion > añoActual) {
-        alert("Por favor, ingrese un año de fabricación válido.");
-        return;
-    }
-
+    // Crear objeto formData
     var formData = {
         id: id,
         color: color,
@@ -34,19 +25,53 @@ function guardarDatos() {
         puertas: puertas,
         modelo: modelo,
         capacidad: capacidad,
-        fabricacion: fabricacion,
+        fecha: fecha,
         precio: precio,
         combustible: combustible,
         serie: serie,
-        velocidadMaxima: velocidadMaxima
+        estado: estado
     };
 
+    // Guardar datos en el almacenamiento local
     var storedData = JSON.parse(localStorage.getItem('automoviles')) || [];
     storedData.push(formData);
     localStorage.setItem('automoviles', JSON.stringify(storedData));
 
+    // Actualizar la tabla y limpiar los campos
     actualizarTabla();
     limpiarCampos();
+}
+
+// Función auxiliar para obtener el valor de un elemento del formulario por su ID
+function obtenerValor(id) {
+    return document.getElementById(id).value.trim();
+}
+
+function validarCampos() {
+    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fabricacion === "" || precio === "" || combustible === "" || serie === "" || velocidadMaxima === "") {
+        alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
+        return false;
+    }
+
+    switch (true) {
+        case serie.length !== 17:
+            alert("El número de chasis debe tener exactamente 17 caracteres alfanuméricos.");
+            return false;
+        case isNaN(fabricacion) || fabricacion > new Date().getFullYear():
+            alert("Por favor, ingrese un año de fabricación válido.");
+            return false;
+        // Otras validaciones específicas...
+        default:
+            return true;
+    }
+}
+
+function guardarDatos() {
+    if (!validarCampos()) {
+        return;
+    }
+
+    // Resto de tu lógica para guardar datos
 }
 
 function limpiarCampos() {
