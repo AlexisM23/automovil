@@ -48,7 +48,7 @@ function obtenerValor(id) {
 }
 
 function validarCampos() {
-    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fabricacion === "" || precio === "" || combustible === "" || serie === "" || velocidadMaxima === "") {
+    if (color === "" || marca === "" || puertas === "" || modelo === "" || capacidad === "" || fecha === "" || precio === "" || combustible === "" || serie === "" || estado === "") {
         alert("Todos los campos son obligatorios. Por favor, complete todos los campos.");
         return false;
     }
@@ -75,23 +75,17 @@ function guardarDatos() {
 }
 
 function limpiarCampos() {
-    document.getElementById('color').value = '';
-    document.getElementById('marca').value = '';
-    document.getElementById('puertas').value = '';
-    document.getElementById('modelo').value = '';
-    document.getElementById('capacidad').value = '';
-    document.getElementById('fabricacion').value = '';
-    document.getElementById('precio').value = '';
-    document.getElementById('combustible').value = '';
-    document.getElementById('chasis').value = '';
-    document.getElementById('velocidadMaxima').value = '';
+    var campos = ['color', 'marca', 'puertas', 'modelo', 'capacidad', 'fabricacion', 'precio', 'combustible', 'chasis', 'velocidadMaxima'];
 
-    // Cambiar el botón a "Guardar" después de limpiar los campos
-    document.getElementById('guardar-actualizar').textContent = 'Guardar';
-    document.getElementById('guardar-actualizar').onclick = function () {
-        guardarDatos();
-    };
+    campos.forEach(function (campo) {
+        document.getElementById(campo).value = '';
+    });
+
+    var botonGuardarActualizar = document.getElementById('guardar-actualizar');
+    botonGuardarActualizar.textContent = 'Guardar';
+    botonGuardarActualizar.onclick = guardarDatos;
 }
+
 
 function actualizarDatos(id) {
     var color = document.getElementById('color').value.trim();
