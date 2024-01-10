@@ -149,3 +149,14 @@ button:active {
     max-width: 100%;
     height: auto;
 }
+
+.error-message {
+    color: red;
+    font-size: 11px; /* Tamaño de la fuente más pequeño */
+    margin-top: -12px; /* Espaciado superior */
+}
+
+.error-visible {
+    display: block;
+}
+
