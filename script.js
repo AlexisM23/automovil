@@ -54,8 +54,8 @@ function validarCampos() {
     }
 
     switch (true) {
-        case chasis.length !== 17:
-            alert("El número de chasis debe tener exactamente 17 caracteres alfanuméricos.");
+        case chasis.length < 17:
+            alert("El número de chasis debe tener al menos 17 caracteres alfanuméricos.");
             return false;
         case isNaN(fecha) || fecha > new Date().getFullYear():
             alert("Por favor, ingrese un año de fabricación válido.");
