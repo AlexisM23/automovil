@@ -57,14 +57,16 @@
     
                     <label for="capacidad">Capacidad de pasajeros:</label>
                     <input type="text" id="capacidad" name="capacidad" required>
-				</form>
+		    <span id="capacidad-error" class="error-message"></span>
+		</form>
             </div>
                 <div class="columna columna2">
                     <label for="fabricacion">Año de fabricación:</label>
-                    <input type="number" id="fabricacion" name="fabricacion" required min="1900" max="2023">
+                    <input type="number" id="fecha" name="fecha" maxlength="4" required min="1900" max="2024">
+			
     
                     <label for="precio">Precio:</label>
-                    <input type="text" id="precio" name="precio" required>
+                    <input type="number" id="precio" name="precio" maxlength="10" step="0.01" min="0" required autocomplete="off">
     
                     <label for="combustible">Tipo de combustible:</label>
                     <select id="combustible" name="combustible" required>
@@ -74,10 +76,13 @@
                     </select>
     
                     <label for="chasis">Número de Chasis:</label>
-                    <input type="text" id="chasis" name="chasis" pattern="[A-Za-z0-9]{17}" required>                    
+                    <input type="text" id="chasis" name="chasis" maxlength="17" pattern="[A-Za-z0-9]{17}" required>                    
     
-                    <label for="velocidadMaxima">Velocidad Máxima:</label>
-                    <input type="text" id="velocidadMaxima" name="velocidadMaxima" required>
+                    <label for="estado">Estado:</label>
+                    <select id="estado" name="estado" required>
+                        <option value="Nuevo">Nuevo</option>
+                        <option value="Usado">Usado</option>
+                    </select>
                 </div>
                 <div class="columna columna3">
                     <label for="imagen">Subir imagen:</label>
